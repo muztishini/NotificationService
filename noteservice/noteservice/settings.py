@@ -25,7 +25,10 @@ SECRET_KEY = "django-insecure-e4-*i-9)=o^r=h&0q#_$6npmtl-x1mdy)4=7ct(u#1w-@9k3_t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "https://probe.fbrq.cloud/v1/",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -39,7 +42,21 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "nserv",
     "rest_framework",
+    'drf_spectacular',
 ]
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'NotificationService',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
