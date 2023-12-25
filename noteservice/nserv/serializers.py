@@ -15,8 +15,8 @@ class NewsletterSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    client_id = ClientSerializer()
-    newsletter_id = NewsletterSerializer()
+    client_id = ClientSerializer(read_only=True)
+    newsletter_id = NewsletterSerializer(read_only=True)
 
     class Meta:
         model = Message

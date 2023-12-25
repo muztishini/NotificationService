@@ -7,6 +7,9 @@ class Client(models.Model):
     tag = models.CharField(max_length=50)
     timezone = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.phone_number
+
 
 class Newsletter(models.Model):
     start_date_time = models.DateTimeField()
@@ -15,9 +18,15 @@ class Newsletter(models.Model):
     client_filter_tag = models.CharField(max_length=50)
     end_date_time = models.DateTimeField()
 
+    def __str__(self):
+        return self.message_text
+
 
 class Message(models.Model):
     creation_date_time = models.DateTimeField()
     send_status = models.CharField(max_length=50)
     newsletter_id = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
     client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.creation_date_time

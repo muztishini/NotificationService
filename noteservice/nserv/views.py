@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.generics import ListCreateAPIView, get_object_or_404
+# from rest_framework.generics import ListCreateAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import requests
@@ -39,3 +39,20 @@ class SendView(APIView):
             response = requests.post(f'https://probe.fbrq.cloud/v1/send/{msgId}', data=data)
             return Response(response.json(), status=response.status_code)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def send_request(msg_id):
+    #     url = f"https://probe.fbrq.cloud/v1/send/{msg_id}"
+    #     payload = {
+    #                 "id": 0,
+    #                 "phone": 0,
+    #                 "text": "string"
+    #                 }  # Ваше тело запроса
+
+    #     response = requests.post(url, json=payload)
+
+    #     if response.status_code == 200:
+    #         # Обработка успешного ответа
+    #         print("Запрос успешно выполнен.")
+    #     else:
+    #         # Обработка ошибки
+    #         print(f"Произошла ошибка при выполнении запроса. Код ошибки: {response.status_code}")
