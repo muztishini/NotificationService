@@ -1,10 +1,8 @@
-from rest_framework import viewsets, status
-# from rest_framework.generics import ListCreateAPIView, get_object_or_404
-from rest_framework.response import Response
-from rest_framework.views import APIView
-import requests
+from rest_framework import viewsets
+# from rest_framework.response import Response
 from .serializers import ClientSerializer, NewsletterSerializer, MessageSerializer
 from .models import Client, Newsletter, Message
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -16,43 +14,33 @@ class NewsletterViewSet(viewsets.ModelViewSet):
     queryset = Newsletter.objects.all()
     serializer_class = NewsletterSerializer
 
-#
-# class MessageViewSet(viewsets.ModelViewSet):
-#     queryset = Message.objects.all()
-#     serializer_class = MessageSerializer
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
 
 
-# class SendCreate(ListCreateAPIView):
-#     queryset = Message.objects.all()
-#     serializer_class = MessageSerializer
+class StatsView(ListAPIView):
+    serializer_class = NewsletterSerializer
 
-    # def perform_create(self, serializer):
-    #     author = get_object_or_404(Message, id=self.request.data.get('msgId'))
-    #     return serializer.save(author=author)
+    def get_queryset(self):
+        queryset = Newsletter.objects.all()
+        return queryset
 
-class SendView(APIView):
-    def post(self, request, msgId):
-        serializer = MessageSerializer(data=request.data)
-        if serializer.is_valid():
-            data = serializer.validated_data
-            # отправляем POST-запрос
-            response = requests.post(f'https://probe.fbrq.cloud/v1/send/{msgId}', data=data)
-            return Response(response.json(), status=response.status_code)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    # def send_request(msg_id):
-    #     url = f"https://probe.fbrq.cloud/v1/send/{msg_id}"
-    #     payload = {
-    #                 "id": 0,
-    #                 "phone": 0,
-    #                 "text": "string"
-    #                 }  # Ваше тело запроса
 
-    #     response = requests.post(url, json=payload)
+class StatView(RetrieveAPIView):
+    serializer_class = NewsletterSerializer
 
-    #     if response.status_code == 200:
-    #         # Обработка успешного ответа
-    #         print("Запрос успешно выполнен.")
-    #     else:
-    #         # Обработка ошибки
-    #         print(f"Произошла ошибка при выполнении запроса. Код ошибки: {response.status_code}")
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        print(pk)
+        queryset = Newsletter.objects.filter(id=pk)
+        print(queryset)
+        messages = Message.objects.filter(newsletter_id=pk).all()
+        for mess in messages:
+            print(mess.client_id)
+            print(mess.send_status)
+            print(mess.creation_date_time)
+        # print(messages)
+        return queryset
+

@@ -25,11 +25,7 @@ SECRET_KEY = "django-insecure-e4-*i-9)=o^r=h&0q#_$6npmtl-x1mdy)4=7ct(u#1w-@9k3_t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "https://probe.fbrq.cloud/v1/",
-    "127.0.0.1",
-]
-
+ALLOWED_HOSTS = []
 
 # Application definition
 
