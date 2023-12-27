@@ -29,4 +29,4 @@ class Message(models.Model):
     client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     # def __str__(self):
-    #     return self.id
+    #     return self.client_id
