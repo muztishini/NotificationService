@@ -16,3 +16,7 @@ PUT /api/newsletter/{id}
 DELETE /api/newsletter/{id}
 обработки активных рассылок и отправки сообщений клиентам:
 сообщения создаются при создании рассылки
+
+документация по api/schema/swagger-ui/
+                api/schema/redoc/
+                
